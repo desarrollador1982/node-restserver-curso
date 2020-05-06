@@ -19,10 +19,10 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'dev';
 ///=============
 let urlDB;
 
-//if(process.env.NODE_ENV === 'dev'){
-//    urlDB = 'mongodb://localhost:27017/cafe';
-//}else{
-    urlDB = 'mongodb+srv://raul:Raulaviana82@cluster0-3ll62.mongodb.net/cafe';
-//}
+if(process.env.NODE_ENV === 'dev'){
+    urlDB = 'mongodb://localhost:27017/cafe';
+}else{
+    urlDB = process.env.MONGO_URI; //ojo con esto es una variable de entorno de heroku, mirar videos explicativos 113 del curso node: DE cero a experto udemy
+}
 
 process.env.URLDB = urlDB;
