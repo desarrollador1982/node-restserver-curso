@@ -4,10 +4,13 @@ const Usuario = require('../models/usuario');
 const app = express();
 const bcrypt = require('bcrypt');
 const _ = require('underscore'); //libreria que añade funcionalidades al funciones javascript
+//nos traemos los middlewares
+const { verificaToken, verificaAdmin_Role } = require('../middlewares/autenticacion');
 
+/*SELECT O GET*/
+//vamos a usar middelwares para cosas del token
+app.get('/usuario', verificaToken,  (req, res) => {
 
-app.get('/usuario', function (req, res) {
-    
     let desde = req.query.desde || 0;
     desde = Number(desde);
     let limite = req.query.limite || 5;
@@ -38,8 +41,8 @@ app.get('/usuario', function (req, res) {
 
 
 });
-
-app.post('/usuario', function (req, res) {
+/*CREATE*/
+app.post('/usuario', [verificaToken, verificaAdmin_Role],  (req, res) => {
     
     let body = req.body;
 
@@ -69,9 +72,9 @@ app.post('/usuario', function (req, res) {
     });
 
 });
-
+/*UPDATE*/
 //el put es para actualización de registros
-app.put('/usuario/:id', function (req, res) {
+app.put('/usuario/:id', [verificaToken, verificaAdmin_Role], (req, res) => {
 
     let id = req.params.id;
     //queremos quitar x elementos del body para no actualizarlos cuando no se debe para eso usamos pick de undercore, le añadimos en el arreglo todas las propiedades validas
@@ -94,8 +97,8 @@ app.put('/usuario/:id', function (req, res) {
     });
 
 });
-
-app.delete('/usuario/:id', function (req, res) {
+/*DELETE*/
+app.delete('/usuario/:id', [verificaToken, verificaAdmin_Role], (req, res) => {
     
     let id = req.params.id;
     

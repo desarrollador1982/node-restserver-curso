@@ -26,3 +26,17 @@ if(process.env.NODE_ENV === 'dev'){
 }
 
 process.env.URLDB = urlDB;
+
+///=============
+// Vencimiento token
+///=============
+//seg*min*horas*dias
+process.env.CADUCIDAD_TOKEN = 60 * 60 * 24 * 30;
+
+///=============
+// SEED de autenticación o semilla de autenticación
+///=============
+//con esta variable hacemos lo mismo que con la bbdd creamos variable en heroku SEED_SEMILLA
+process.env.SEED =  process.env.SEED_SEMILLA  || 'este-es-el-seed-desarrollo';
+
+
